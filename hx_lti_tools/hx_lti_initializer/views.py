@@ -113,7 +113,10 @@ def launch_lti(request):
     course = get_lti_value(settings.LTI_COURSE_ID, tool_provider)
     collection = get_lti_value(settings.LTI_COLLECTION_ID, tool_provider)
     object_ids = get_lti_value(settings.LTI_OBJECT_IDS, tool_provider)
-    objects = object_ids.split(';')
+    objects = []
+    if object_ids:
+        objects = object_ids.split(';')
+ 
     email = get_lti_value('lis_person_contact_email_primary', tool_provider)
     
     debug_printer('DEBUG - Found course being accessed: %s' % course)
