@@ -1,0 +1,49 @@
+<script src="{% static "vendors/mirador/mirador.js" %}"></script>
+<link rel="stylesheet" href="{% static "vendors/mirador/css/mirador-combined.min.css" %}">
+
+<div id="viewer"></div>
+
+<script>
+$(function() {
+      Mirador({
+        "id": "viewer",
+        "currentWorkspaceType": "singleObject",
+        "mainMenuSettings" : {
+           'show' : false
+        },
+        "layout" : "1x1",
+        "data": [
+        {{% for i in objects %}}
+        { "manifestUri": "{{i}}", "location": "Harvard University"},
+        {{% endfor %}}
+        ],
+        "windowObjects": [
+          {
+            "loadedManifest": "",
+        	"viewType" : "ImageView", 
+                "annotationLayer" : false,
+        	"sidePanel" : false,
+                "layoutOptions" : 
+             {
+             "newObject" : true,
+             "close" : false,
+             "slotRight" : false,
+             "slotLeft" : false,
+             "slotAbove" : false,
+             "slotBelow" : false
+             }
+          },
+        ],
+        "annotationEndpoint": 
+          {
+          "name":"Harvard CATCH Dev",
+          "module": "CatchEndpoint",
+          "options": {
+            token: "{{ token }}",
+            // The endpoint of the store on your server.
+            prefix: "http://54.148.223.225:8080/catch/annotator",
+          }
+        }
+      });
+    });
+</script>

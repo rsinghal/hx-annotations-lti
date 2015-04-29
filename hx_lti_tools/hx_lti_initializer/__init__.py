@@ -30,10 +30,10 @@ setconf('CONSUMER_KEY', '123key')
 # in other words, keep it hidden!
 setconf('LTI_SECRET', 'secret')
 
-# needs context_id, collection_id, and object_id to open correct item in tool
+# needs context_id, collection_id, and object_ids to open correct item in tool
 setconf('LTI_COURSE_ID', 'context_id')
 setconf('LTI_COLLECTION_ID', 'custom_collection_id')
-setconf('LTI_OBJECT_ID', 'custom_object_id')
+setconf('LTI_OBJECT_IDS', 'custom_object_ids')
 
 # collects roles as user needs to be an admin in order to create a profile
 setconf('LTI_ROLES', 'roles')
