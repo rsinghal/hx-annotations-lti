@@ -124,7 +124,7 @@ def launch_lti(request):
         return render(request, '%s/detail.html' % target_type, {
             'email': email,
             'username': get_lti_value('lis_person_sourcedid', tool_provider),
-            'user_id' : get_lti_value('user_id', tool_provider)
+            'user_id' : get_lti_value('user_id', tool_provider),
             'roles': roles,
             'collection': collection,
             'course': course,
