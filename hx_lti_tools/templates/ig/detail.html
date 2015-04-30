@@ -14,9 +14,9 @@ $(function() {
         },
         "layout" : "1x1",
         "data": [
-        {{% for i in objects %}}
-        { "manifestUri": "{{i}}", "location": "Harvard University"},
-        {{% endfor %}}
+        {% for i in objects %}
+        { "manifestUri": "{{ i }}", "location": "Harvard University"},
+        {% endfor %}
         ],
         "windowObjects": [
           {
