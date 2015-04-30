@@ -1,7 +1,10 @@
 {% load staticfiles %}
 <script src="{% static "vendors/mirador/mirador.js" %}"></script>
 <link rel="stylesheet" href="{% static "vendors/mirador/css/mirador-combined.min.css" %}">
-
+<style type="text/css">
+    body { padding: 0; margin: 0; overflow: hidden; font-size: 70%; }
+    #viewer { background: #333 url(../../../static/vendors/mirador/images/debut_dark.png) left top repeat; width: 100%; height: 100%; position: fixed; }
+  </style>
 <div id="viewer"></div>
 
 <script>
@@ -13,6 +16,7 @@ $(function() {
            'show' : false
         },
         "layout" : "1x1",
+        "saveSession" : false,
         "data": [
         {% for i in objects %}
         { "manifestUri": "{{ i }}", "location": "Harvard University"},
