@@ -15,7 +15,6 @@ from django.contrib.auth import login
 from django.conf import settings
 from django.contrib import messages
 
-from hx_lti_todapi.models import TargetObject
 from hx_lti_initializer.models import LTIProfile, LTICourse
 from abstract_base_classes.target_object_database_api import TOD_Implementation
 

@@ -24,7 +24,7 @@ $(function() {
         ],
         "windowObjects": [
           {
-            "loadedManifest": "",
+            "loadedManifest": "{{ objects.0 }}",
         	"viewType" : "ImageView", 
                 "annotationLayer" : false,
         	"sidePanel" : false,
@@ -47,6 +47,8 @@ $(function() {
             token: "{{ token }}",
             // The endpoint of the store on your server.
             prefix: "http://54.148.223.225:8080/catch/annotator",
+            userid : "{{ user_id }}",
+            username : "{{ username }}"
           }
         }
       });
