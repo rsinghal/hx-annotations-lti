@@ -123,7 +123,6 @@ def launch_lti(request):
     if True:
         target_type = 'ig'
         return render(request, '%s/detail.html' % target_type, {
-            'email': email,
             'username': get_lti_value('lis_person_sourcedid', tool_provider),
             'user_id' : user_id,
             'roles': roles,
