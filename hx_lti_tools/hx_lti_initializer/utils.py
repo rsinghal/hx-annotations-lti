@@ -1,13 +1,9 @@
 from django.conf import settings
-from abstract_base_classes.target_object_database_api import *
 from firebase_token_generator import create_token
 from models import *
 import base64
 import sys
 import datetime
-
-# import Sample Target Object Model
-from hx_lti_todapi.models import TargetObject
 
 
 def get_lti_value(key, tool_provider):
