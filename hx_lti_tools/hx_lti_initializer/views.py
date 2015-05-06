@@ -16,7 +16,6 @@ from django.conf import settings
 from django.contrib import messages
 
 from hx_lti_initializer.models import LTIProfile, LTICourse
-from abstract_base_classes.target_object_database_api import TOD_Implementation
 
 from models import *
 from utils import *
