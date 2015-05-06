@@ -1,0 +1,71 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+</script>
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% load staticfiles %}
+<script src="{% static "vendors/SplitAnnotator/annotator.js" %}"></script>
+<script src="{% static "vendors/SplitAnnotator/annotator.auth.js" %}"></script>
+<script src="{% static "vendors/SplitAnnotator/annotator.document.js" %}"></script>
+<script src="{% static "vendors/SplitAnnotator/annotator.filter.js" %}"></script>
+<script src="{% static "vendors/SplitAnnotator/annotator.kitchensink.js" %}"></script>
+<script src="{% static "vendors/SplitAnnotator/annotator.markdown.js" %}"></script>
+<script src="{% static "vendors/SplitAnnotator/annotator.permissions.js" %}"></script>
+<script src="{% static "vendors/SplitAnnotator/annotator.store.js" %}"></script>
+<script src="{% static "vendors/SplitAnnotator/annotator.tags.js" %}"></script>
+<script src="{% static "vendors/SplitAnnotator/annotator.unsupported.js" %}"></script>
+<script src="{% static "AController.js" %}"></script>
+<script src="{% static "AnnotationMain.js" %}"></script>
+<script src="{% static "AnnotationCore.js" %}"></script>
+<script src="{% static "TargetObjectController.js" %}"></script>
+<link rel="stylesheet" href="{% static "vendors/SplitAnnotator/annotator.css" %}">
+<div class="container">
+<h1>{{ target_object.target_title | safe }}</h1>
+<h3>by {{ target_object.target_author | safe }}</h3>
+<div class="content">
+{{ target_object.target_content | safe }}
+</div>
+<div class="citation">
+{{ target_object.target_citation | safe }}
+</div>
+</div>
+
+<script>
+jQuery(function ($) {
+    $(function() {
+		var options = {
+			commonInfo: {
+				mediaType: "text", // {{ media_type }}
+				context_id: "{{ course }}",
+				collection_id: {{ collection }},
+				object_id: {{ object }},
+				token: "{{ token }}",
+
+			},
+			annotationMainOptions: {
+
+			},
+			annotationCoreOptions: {
+				annotationElement: jQuery(".container"),
+				initOptions: {
+					'plugins': [
+						// order matters, auth before store
+						'Auth',
+						'Store',
+					],
+				},
+			},
+			targetObjectControllerOptions: {
+
+			},
+		}
+		AController(options);
+	});
+});
+</script>
