@@ -17,7 +17,7 @@ $(function() {
         },
         "layout" : "1x1",
         "saveSession" : false,
-        "logosLocation" : "{% static "vendors/mirador/images/logos/"}"
+        "logosLocation" : "{% static "vendors/mirador/images/logos/" %}",
         "data": [
         {% for i in objects %}
         { "manifestUri": "{{ i }}", "location": "Harvard University"},
