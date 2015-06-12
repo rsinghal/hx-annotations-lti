@@ -117,7 +117,7 @@ def launch_lti(request):
  
     user_id = get_lti_value('user_id', tool_provider)
     username = get_lti_value('lis_person_sourcedid', tool_provider)
-    if username == "None":
+    if username is None:
         username = user_id
     
     debug_printer('DEBUG - Found course being accessed: %s' % course)
