@@ -38,12 +38,12 @@ def validate_request(req):
     if 'user_id' not in req.POST:
         debug_printer('DEBUG - Anonymous ID was not present in request.')
         raise PermissionDenied()
-    if 'lis_person_sourcedid' not in req.POST:
-        debug_printer('DEBUG - Username was not present in request.')
-        raise PermissionDenied()
-    if 'lis_person_contact_email_primary' not in req.POST:
-        debug_printer('DEBUG - User Email was not present in request.')
-        raise PermissionDenied()
+   # if 'lis_person_sourcedid' not in req.POST:
+   #     debug_printer('DEBUG - Username was not present in request.')
+   #     raise PermissionDenied()
+   # if 'lis_person_contact_email_primary' not in req.POST:
+   #     debug_printer('DEBUG - User Email was not present in request.')
+   #     raise PermissionDenied()
 
 def initialize_lti_tool_provider(req):
     """
@@ -116,6 +116,9 @@ def launch_lti(request):
         objects = object_ids.split(';')
  
     user_id = get_lti_value('user_id', tool_provider)
+    username = get_lti_value('lis_person_sourcedid', tool_provider)
+    if username == "None":
+        username = user_id
     
     debug_printer('DEBUG - Found course being accessed: %s' % course)
     
@@ -123,7 +126,7 @@ def launch_lti(request):
     if True:
         target_type = 'ig'
         return render(request, '%s/detail.html' % target_type, {
-            'username': get_lti_value('lis_person_sourcedid', tool_provider),
+            'username': username,
             'user_id' : user_id,
             'roles': roles,
             'collection': collection,
