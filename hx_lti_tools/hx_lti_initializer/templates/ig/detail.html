@@ -26,10 +26,13 @@ $(function() {
         "windowObjects": [
           {
             "loadedManifest": "{{ objects.0 }}",
-        	"viewType" : "ImageView", 
-                "annotationLayer" : true,
-        	"sidePanel" : false,
-                "layoutOptions" : 
+        	  "viewType" : "{{ view_type }}",
+            {% if canvas_id %}
+              "canvasID" : "{{ canvas_id }}",
+            {% endif %}
+            "annotationLayer" : true,
+        	  "sidePanel" : false,
+            "layoutOptions" : 
              {
              "newObject" : true,
              "close" : false,

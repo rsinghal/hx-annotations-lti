@@ -114,6 +114,11 @@ def launch_lti(request):
     objects = []
     if object_ids:
         objects = object_ids.split(';')
+    view_type = get_lti_value(settings.LTI_VIEW_TYPE, tool_provider)
+    if not view_type:
+        view_type = "ImageView"
+    canvas_id = get_lti_value(settings.LTI_CANVAS_ID, tool_provider)
+
  
     user_id = get_lti_value('user_id', tool_provider)
     username = get_lti_value('lis_person_sourcedid', tool_provider)
@@ -126,13 +131,15 @@ def launch_lti(request):
     if True:
         target_type = 'ig'
         return render(request, '%s/detail.html' % target_type, {
-            'username': username,
-            'user_id' : user_id,
-            'roles': roles,
+            'username'  : username,
+            'user_id'   : user_id,
+            'roles'     : roles,
             'collection': collection,
-            'course': course,
-            'objects': objects,
-            'token': retrieve_token(user_id, ''),
+            'course'    : course,
+            'objects'   : objects,
+            'view_type' : view_type,
+            'canvas_id' : canvas_id
+            'token'     : retrieve_token(user_id, ''),
         })
     
     try:
