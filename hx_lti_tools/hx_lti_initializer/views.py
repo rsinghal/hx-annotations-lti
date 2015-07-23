@@ -138,7 +138,7 @@ def launch_lti(request):
             'course'    : course,
             'objects'   : objects,
             'view_type' : view_type,
-            'canvas_id' : canvas_id
+            'canvas_id' : canvas_id,
             'token'     : retrieve_token(user_id, ''),
         })
     
