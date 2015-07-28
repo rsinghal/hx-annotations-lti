@@ -128,19 +128,34 @@ def launch_lti(request):
     debug_printer('DEBUG - Found course being accessed: %s' % course)
     
     roles = get_lti_value(settings.LTI_ROLES, tool_provider)
-    if True:
-        target_type = 'ig'
-        return render(request, '%s/detail.html' % target_type, {
-            'username'  : username,
-            'user_id'   : user_id,
-            'roles'     : roles,
-            'collection': collection,
-            'course'    : course,
-            'objects'   : objects,
-            'view_type' : view_type,
-            'canvas_id' : canvas_id,
-            'token'     : retrieve_token(user_id, ''),
-        })
+
+    x_frame_allowed = False
+    parsed_uri = urlparse(request.META.get('HTTP_REFERER'))
+    domain = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_uri)
+    debug_printer('DEBUG - Domain: %s \r' % domain)
+    for item in settings.X_FRAME_ALLOWED_SITES:
+        if domain.endswith(item):
+            x_frame_allowed = True
+            break
+
+    target_type = 'ig'
+    response = render(request, '%s/detail.html' % target_type, {
+        'username'  : username,
+        'user_id'   : user_id,
+        'roles'     : roles,
+        'collection': collection,
+        'course'    : course,
+        'objects'   : objects,
+        'view_type' : view_type,
+        'canvas_id' : canvas_id,
+        'token'     : retrieve_token(user_id, ''),
+    })
+
+    if not x_frame_allowed:
+        response['X-Frame-Options'] = "DENY"
+    else :
+        response['X-Frame-Options'] = "ALLOW FROM " + domain
+    return response
     
     try:
         # try to get the profile via the anon id
