@@ -19,6 +19,7 @@ from hx_lti_initializer.models import LTIProfile, LTICourse
 
 from models import *
 from utils import *
+from urlparse import urlparse
 import sys
 
 def validate_request(req):
@@ -131,8 +132,9 @@ def launch_lti(request):
 
     x_frame_allowed = False
     parsed_uri = urlparse(request.META.get('HTTP_REFERER'))
+    debug_printer('DEBUG - Parsed URI: %s' % parsed_uri)
     domain = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_uri)
-    debug_printer('DEBUG - Domain: %s \r' % domain)
+    debug_printer('DEBUG - Domain: %s' % domain)
     for item in settings.X_FRAME_ALLOWED_SITES:
         if domain.endswith(item):
             x_frame_allowed = True
