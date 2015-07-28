@@ -132,7 +132,6 @@ def launch_lti(request):
 
     x_frame_allowed = False
     parsed_uri = urlparse(request.META.get('HTTP_REFERER'))
-    debug_printer('DEBUG - Parsed URI: %s' % parsed_uri)
     domain = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_uri)
     debug_printer('DEBUG - Domain: %s' % domain)
     for item in settings.X_FRAME_ALLOWED_SITES:
