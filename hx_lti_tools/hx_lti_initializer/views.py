@@ -130,7 +130,10 @@ def launch_lti(request):
     roles = get_lti_value(settings.LTI_ROLES, tool_provider)
     username = get_lti_value('lis_person_sourcedid', tool_provider)
     if 'Instructor' in roles:
-        username = username + " " + 'Instructor'
+        if username is None:
+            username = "Instructor"
+        else:
+            str(username) + " " + 'Instructor'
     if username is None:
         username = user_id[:10]
 
