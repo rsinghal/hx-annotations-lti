@@ -110,26 +110,33 @@ def launch_lti(request):
     debug_printer('DEBUG - Found anonymous ID in request: %s' % anon_id)
     
     course = get_lti_value(settings.LTI_COURSE_ID, tool_provider)
+    debug_printer('DEBUG - Found course being accessed: %s' % course)
     collection = get_lti_value(settings.LTI_COLLECTION_ID, tool_provider)
+    # objects to load into mirador
     object_ids = get_lti_value(settings.LTI_OBJECT_IDS, tool_provider)
     objects = []
     if object_ids:
         objects = object_ids.split(';')
+    # window specific parameters
     view_type = get_lti_value(settings.LTI_VIEW_TYPE, tool_provider)
     if not view_type:
         view_type = "ImageView"
     canvas_id = get_lti_value(settings.LTI_CANVAS_ID, tool_provider)
+    
+    # annotation parameters
 
  
     user_id = get_lti_value('user_id', tool_provider)
-    username = get_lti_value('lis_person_sourcedid', tool_provider)
-    if username is None:
-        username = user_id
-    
-    debug_printer('DEBUG - Found course being accessed: %s' % course)
-    
     roles = get_lti_value(settings.LTI_ROLES, tool_provider)
+    username = get_lti_value('lis_person_sourcedid', tool_provider)
+    if 'Instructor' in roles:
+        username = username + " " + 'Instructor'
+    if username is None:
+        username = user_id[:10]
 
+    debug_printer('DEBUG - username is : %s' % username)    
+
+    # add x-frame-allowed header, rather than doing it in Apache
     x_frame_allowed = False
     parsed_uri = urlparse(request.META.get('HTTP_REFERER'))
     domain = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_uri)
