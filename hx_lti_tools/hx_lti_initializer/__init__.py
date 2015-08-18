@@ -36,6 +36,8 @@ setconf('LTI_COLLECTION_ID', 'custom_collection_id')
 setconf('LTI_OBJECT_IDS', 'custom_object_ids')
 setconf('LTI_VIEW_TYPE', 'custom_view_type')
 setconf('LTI_CANVAS_ID', 'custom_canvas_id')
+setconf('LTI_SHOW_ANNOTATIONS', 'custom_show_annotations')
+setconf('LTI_SHOW_ANNOTATION_CREATION', 'custom_show_annotation_creation')
 
 # collects roles as user needs to be an admin in order to create a profile
 setconf('LTI_ROLES', 'roles')

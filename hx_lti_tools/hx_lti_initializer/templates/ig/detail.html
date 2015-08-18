@@ -36,8 +36,10 @@ $(function() {
             {% if canvas_id %}
               "canvasID" : "{{ canvas_id }}",
             {% endif %}
-            "annotationLayer" : true,
+            "annotationLayer" : "{{ show_annotations }}",
+            "annotationCreation" : "{{ show_annotation_creation }}",
         	  "sidePanel" : false,
+            "fullScreen" : false,
             "layoutOptions" : 
              {
              "newObject" : true,

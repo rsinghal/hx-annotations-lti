@@ -124,7 +124,17 @@ def launch_lti(request):
     canvas_id = get_lti_value(settings.LTI_CANVAS_ID, tool_provider)
     
     # annotation parameters
+    show_annotations = get_lti_value(settings.LTI_SHOW_ANNOTATIONS, tool_provider)
+    if not show_annotations or show_annotations.lower() != 'false':
+        show_annotations = 'true'
+    else:
+        show_annotations = show_annotations.lower()
 
+    show_annotation_creation = get_lti_value(settings.LTI_SHOW_ANNOTATION_CREATION, tool_provider)
+    if not show_annotation_creation or show_annotation_creation.lower() != 'false':
+        show_annotation_creation = 'true'
+    else:
+        show_annotation_creation = show_annotation_creation.lower()
  
     user_id = get_lti_value('user_id', tool_provider)
     roles = get_lti_value(settings.LTI_ROLES, tool_provider)
@@ -160,6 +170,8 @@ def launch_lti(request):
         'view_type' : view_type,
         'canvas_id' : canvas_id,
         'token'     : retrieve_token(user_id, ''),
+        'show_annotations' : show_annotations,
+        'show_annotation_creation' : show_annotation_creation
     })
 
     if not x_frame_allowed:
