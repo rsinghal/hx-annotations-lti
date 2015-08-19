@@ -16,7 +16,6 @@
 $(function() {
       Mirador({
         "id": "viewer",
-        "currentWorkspaceType": "singleObject",
         "mainMenuSettings" : {
            'show' : false
         },
@@ -53,12 +52,12 @@ $(function() {
         ],
         "annotationEndpoint": 
           {
-          "name":"Harvard CATCH Dev",
+          "name":"Harvard CATCH Production",
           "module": "CatchEndpoint",
           "options": {
             token: "{{ token }}",
             // The endpoint of the store on your server.
-            prefix: "https://catch-dev.harvardx.harvard.edu/catch/annotator",
+            prefix: "https://catch.harvardx.harvard.edu/catch/annotator",
             userid : "{{ user_id }}",
             username : "{{ username }}",
             roles : "{{ roles }}",
