@@ -20,7 +20,7 @@ $(function() {
            'show' : false
         },
         "i18nPath" : "{% static "vendors/mirador/locales/" %}",
-        "layout" : "1x1",
+        "layout" : "{{ layout }}",
         "saveSession" : false,
         "logosLocation" : "{% static "vendors/mirador/images/logos/" %}",
         "data": [
@@ -29,11 +29,12 @@ $(function() {
         {% endfor %}
         ],
         "windowObjects": [
+        {% for i in objects %}
           {
-            "loadedManifest": "{{ objects.0 }}",
+            "loadedManifest": "{{ i }}",
         	  "viewType" : "{{ view_type }}",
             {% if canvas_id %}
-              "canvasID" : "{{ canvas_id }}",
+              "canvasID" : "{{ object_canvas_ids.items.i }}",
             {% endif %}
             "annotationLayer" : {{ show_annotations }},
             "annotationCreation" : {{ show_annotation_creation }},
@@ -49,6 +50,7 @@ $(function() {
              "slotBelow" : false
              }
           },
+        {% endfor %}
         ],
         "annotationEndpoint": 
           {

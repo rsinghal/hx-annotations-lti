@@ -61,10 +61,8 @@ def initialize_lti_tool_provider(req):
     try:
         # this means that request was well formed but invalid
         if provider.valid_request(req) == False:
-            debug_printer("DEBUG - LTI Exception: Not a valid request.")
+            #debug_printer("DEBUG - LTI Exception: Not a valid request.")
             raise PermissionDenied()
-        else:
-            debug_printer('DEBUG - LTI Tool Provider was valid.')
     except:
         raise PermissionDenied()
     return provider
@@ -107,12 +105,17 @@ def launch_lti(request):
     # if it exists, we initialize the tool otherwise, we create a new user
     consumer_key_requested = request.POST['oauth_consumer_key']
     anon_id = '%s:%s' % (consumer_key_requested, get_lti_value('user_id', tool_provider))
-    debug_printer('DEBUG - Found anonymous ID in request: %s' % anon_id)
     
     course = get_lti_value(settings.LTI_COURSE_ID, tool_provider)
     debug_printer('DEBUG - Found course being accessed: %s' % course)
     collection = get_lti_value(settings.LTI_COLLECTION_ID, tool_provider)
     # objects to load into mirador
+    layout_param = get_lti_value(settings.LTI_LAYOUT, tool_provider)
+    if layout_param:
+        layout = layout_param
+    else:
+        layout = "1x1"
+
     object_ids = get_lti_value(settings.LTI_OBJECT_IDS, tool_provider)
     objects = []
     if object_ids:
@@ -121,8 +124,18 @@ def launch_lti(request):
     view_type = get_lti_value(settings.LTI_VIEW_TYPE, tool_provider)
     if not view_type:
         view_type = "ImageView"
-    canvas_id = get_lti_value(settings.LTI_CANVAS_ID, tool_provider)
-    
+    canvas_ids = get_lti_value(settings.LTI_CANVAS_ID, tool_provider)
+    if canvas_ids is None:
+        canvas_ids = get_lti_value(settings.LTI_CANVAS_IDS, tool_provider)
+    canvases = []
+    if canvas_ids:
+        canvases = canvas_ids.split(';')
+    object_canvas_ids = {}
+    for object in objects:
+        for canvas in canvases:
+            if object in canvas:
+                object_canvas_ids[object] = canvas
+
     # annotation parameters
     show_annotations = get_lti_value(settings.LTI_SHOW_ANNOTATIONS, tool_provider)
     if not show_annotations or show_annotations.lower() != 'false':
@@ -135,8 +148,15 @@ def launch_lti(request):
         show_annotation_creation = 'true'
     else:
         show_annotation_creation = show_annotation_creation.lower()
- 
+
+    # print out custom parameters
+    debug_printer('DEBUG - Found object ids in request: %s' % ', '.join(object_ids))
+    debug_printer('DEBUG - Found view type in request: %s' % view_type)
+    if canvas_id:
+        debug_printer('DEBUG - Found canvas id in request: %s' % canvas_id)
+     
     user_id = get_lti_value('user_id', tool_provider)
+    debug_printer('DEBUG - Found anonymous ID in request: %s' % user_id)
     roles = get_lti_value(settings.LTI_ROLES, tool_provider)
     username = get_lti_value('lis_person_sourcedid', tool_provider)
     if len(set(settings.ADMIN_ROLES).intersection(set(roles))) > 0:
@@ -147,13 +167,10 @@ def launch_lti(request):
     if username is None:
         username = user_id[:10]
 
-    debug_printer('DEBUG - username is : %s' % username)    
-
     # add x-frame-allowed header, rather than doing it in Apache
     x_frame_allowed = False
     parsed_uri = urlparse(request.META.get('HTTP_REFERER'))
     domain = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_uri)
-    debug_printer('DEBUG - Domain: %s' % domain)
     for item in settings.X_FRAME_ALLOWED_SITES:
         if domain.endswith(item):
             x_frame_allowed = True
@@ -166,9 +183,10 @@ def launch_lti(request):
         'roles'     : roles,
         'collection': collection,
         'course'    : course,
+        'layout'    : layout,
         'objects'   : objects,
         'view_type' : view_type,
-        'canvas_id' : canvas_id,
+        'canvas_id' : object_canvas_ids,
         'token'     : retrieve_token(user_id, ''),
         'show_annotations' : show_annotations,
         'show_annotation_creation' : show_annotation_creation
