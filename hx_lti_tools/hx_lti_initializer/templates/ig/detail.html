@@ -29,11 +29,11 @@ $(function() {
         {% endfor %}
         ],
         "windowObjects": [
-        {% for i in objects %}
+        {% for key,value in object_canvas_ids.items %}
           {
-            "loadedManifest": "{{ i }}",
-        	  "viewType" : "{{ view_type }}",
-            "canvasID" : "{{ object_canvas_ids.items.i }}",
+            "loadedManifest": "{{ key }}",
+            "viewType" : "{{ view_type }}",
+            "canvasID" : "{{ value }}",
             "annotationLayer" : {{ show_annotations }},
             "annotationCreation" : {{ show_annotation_creation }},
         	  "sidePanel" : false,
