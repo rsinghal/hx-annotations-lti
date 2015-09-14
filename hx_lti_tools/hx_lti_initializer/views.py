@@ -132,9 +132,13 @@ def launch_lti(request):
         canvases = canvas_ids.split(';')
     object_canvas_ids = {}
     for object in objects:
+        found_canvas = False
         for canvas in canvases:
             if object in canvas:
                 object_canvas_ids[object] = canvas
+                found_canvas = True
+        if not found_canvas:
+            object_canvas_ids[object] = ""
 
     # annotation parameters
     show_annotations = get_lti_value(settings.LTI_SHOW_ANNOTATIONS, tool_provider)
