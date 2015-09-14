@@ -33,9 +33,7 @@ $(function() {
           {
             "loadedManifest": "{{ i }}",
         	  "viewType" : "{{ view_type }}",
-            {% if canvas_id %}
-              "canvasID" : "{{ object_canvas_ids.items.i }}",
-            {% endif %}
+            "canvasID" : "{{ object_canvas_ids.items.i }}",
             "annotationLayer" : {{ show_annotations }},
             "annotationCreation" : {{ show_annotation_creation }},
         	  "sidePanel" : false,

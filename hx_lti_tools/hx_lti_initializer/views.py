@@ -153,7 +153,7 @@ def launch_lti(request):
     debug_printer('DEBUG - Found object ids in request: %s' % ', '.join(objects))
     debug_printer('DEBUG - Found view type in request: %s' % view_type)
     if canvases:
-        debug_printer('DEBUG - Found canvas id in request: %s' % ', '.join(object_canvas_ids))
+        debug_printer('DEBUG - Found canvas id in request: %s' % object_canvas_ids)
      
     user_id = get_lti_value('user_id', tool_provider)
     debug_printer('DEBUG - Found anonymous ID in request: %s' % user_id)
