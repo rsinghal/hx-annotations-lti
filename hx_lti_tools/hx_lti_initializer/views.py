@@ -186,7 +186,7 @@ def launch_lti(request):
         'layout'    : layout,
         'objects'   : objects,
         'view_type' : view_type,
-        'canvas_id' : object_canvas_ids,
+        'object_canvas_ids' : object_canvas_ids,
         'token'     : retrieve_token(user_id, ''),
         'show_annotations' : show_annotations,
         'show_annotation_creation' : show_annotation_creation
