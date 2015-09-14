@@ -150,10 +150,10 @@ def launch_lti(request):
         show_annotation_creation = show_annotation_creation.lower()
 
     # print out custom parameters
-    debug_printer('DEBUG - Found object ids in request: %s' % ', '.join(object_ids))
+    debug_printer('DEBUG - Found object ids in request: %s' % ', '.join(objects))
     debug_printer('DEBUG - Found view type in request: %s' % view_type)
-    if canvas_id:
-        debug_printer('DEBUG - Found canvas id in request: %s' % canvas_id)
+    if canvases:
+        debug_printer('DEBUG - Found canvas id in request: %s' % ', '.join(canvases))
      
     user_id = get_lti_value('user_id', tool_provider)
     debug_printer('DEBUG - Found anonymous ID in request: %s' % user_id)
