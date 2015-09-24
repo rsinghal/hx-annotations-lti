@@ -135,7 +135,7 @@ def launch_lti(request):
         found_canvas = False
         for canvas in canvases:
             if object in canvas:
-                object_canvas_ids[object] = canvas
+                object_canvas_ids[object] = canvas.replace(" ", "")
                 found_canvas = True
         if not found_canvas:
             object_canvas_ids[object] = ""
