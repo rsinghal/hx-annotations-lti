@@ -2208,6 +2208,40 @@ a {
   margin:0;
 }
 
+/* Full screen
+---------------------------------------------------------------------------- */
+:-webkit-full-screen {
+  height: 100%;
+  left: 0;
+  margin: 0;
+  top: 0;
+  width: 100%;
+}
+
+:-moz-full-screen {
+  height: 100%;
+  left: 0;
+  margin: 0;
+  top: 0;
+  width: 100%;
+}
+
+:-ms-fullscreen {
+  height: 100%;
+  left: 0;
+  margin: 0;
+  top: 0;
+  width: 100%;
+}
+
+:fullscreen {
+  height: 100%;
+  left: 0;
+  margin: 0;
+  top: 0;
+  width: 100%;
+}
+
 /*----------------------------------------------------------------------------
 /* Mirador styles
 ---------------------------------------------------------------------------- 
@@ -2352,6 +2386,8 @@ a {
   white-space: nowrap;
   padding-left: 10px;
   margin: 8px 0px 8px 0px;
+  font-weight: bold;
+  font-size: 1.3em;
 }
 
 .window-manifest-navigation {
@@ -2484,11 +2520,14 @@ a {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow:hidden;
+  font-size: 1.15em;
 }
 .items-listing h3 {
   color:rgba(0,0,0,0.8);
   font-weight:bold;
   margin-top:2px;
+  font-weight: bold;
+  font-size: 1.3em;
 }
 .repo-image, .select-metadata, .preview-images {
   float:left;
@@ -2717,16 +2756,34 @@ li.highlight {
   overflow:hidden;
   pointer-events: none;
 }
-.slot:hover {
+.slot:hover, .slot.focused, .slot.draggedOver {
   box-shadow: inset 0 0 35px rgba(94, 219, 255, 1);
 }
+.slot.draggedOver .dropMeMessage, .slot.draggedOver .dropIcon {
+    display:block;
+}
+.dropMeMessage, .dropIcon {
+    display:none;
+}
+.slot.draggedOver .addItemText, .slot.draggedOver .plus span {
+    display:none;
+}
 .addItemLink {
+    display:block;
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    cursor: pointer;
+}
+.dropMask {
   position:absolute;
   top:0;
   bottom:0;
   right:0;
   left:0;
-  cursor: pointer;
+  display:none;
 }
 
 /* window scaffolding */
@@ -2761,7 +2818,10 @@ li.highlight {
   /*display: none;*/
   box-sizing: border-box;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0s ease;
+}
+.sidePanel a:hover {
+  text-decoration: none;
 }
 .sidePanel h1, .sidePanel h2, .sidePanel h3, .sidePanel h4 {
   margin:0;
@@ -2769,6 +2829,18 @@ li.highlight {
   font-weight: normal;
 }
 .sidePanel h1:hover, .sidePanel h2:hover, .sidePanel h3:hover, .sidePanel h4:hover {
+}
+.sidePanel h2 {
+  font-size: 1.5em;
+}
+.sidePanel h3 {
+  font-size: 1.25em;
+}
+.sidePanel h4 {
+  font-size: 1.0em;
+}
+.sidePanel h5 {
+  font-size: .75em;
 }
 .toc {
   margin:0;
@@ -2778,7 +2850,7 @@ li.highlight {
   position:absolute;
   box-sizing: border-box;
   left:0;
-  top:10px;
+  top:0px;
   bottom:0;
   list-style-type:none;
   font-size: 75%;
@@ -2829,7 +2901,7 @@ li.highlight {
 .toc li.has-child i.star {
   display: none;
 }
-.toc li.leaf-item i.caret {
+.toc li.leaf-item i.toc-caret {
   display: none
 }
 .toc li.leaf-item i.star {
@@ -2841,7 +2913,7 @@ li.highlight {
 .toc li.selected>h2 .toc-link .star, .toc li.selected>h3 .toc-link .star, .toc li.selected>h4 .toc-link .star, .toc li.selected>h5 .toc-link .star .toc li.hovered>h2 .toc-link .star, .toc li.hovered>h3 .toc-link .star, .toc li.hovered>h4 .toc-link .star, .toc li.hovered>h5 .toc-link .star {
   color:black;
 }
-.toc li.open>h2 .toc-link .caret, .toc li.open>h3 .toc-link .caret, .toc li.open>h4 .toc-link .caret, .toc li.open>h5 .toc-link .caret  {
+.toc li.open>h2 .toc-link .toc-caret, .toc li.open>h3 .toc-link .toc-caret, .toc li.open>h4 .toc-link .toc-caret, .toc li.open>h5 .toc-link .toc-caret  {
   transition: all 0.2s linear;
   transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
@@ -2874,7 +2946,7 @@ li.highlight {
   margin-left: 280px;
   height: 100%;
   position:relative;
-  transition:all 0.3s ease;
+  transition:all 0s ease;
 }
 
 .view-container.tranisition {
@@ -3059,9 +3131,9 @@ li.highlight {
 }
 .mirador-osd-annotations-layer {
   position:absolute;
-  bottom:0;
-  left:0;
-  margin: 1%;
+  top: 10px;
+  left: 10px;
+  transition: none;
 }
 .mirador-osd-toggle-bottom-panel {
   position: absolute;
@@ -3122,9 +3194,9 @@ li.highlight {
 }
 .mirador-osd-context-controls {
   position: absolute;
-  top:0;
-  left:0;
-  margin: 15px;
+  top: 10px;
+  left: 10px;
+  transition: none;
 }
 .mirador-osd-context-controls a {
   float:left;
@@ -3725,7 +3797,8 @@ div.manifest-info a.mirador-btn.mirador-icon-toc {
   clear: both;
 }
 .qtip-content {
-  max-height: 185px;
+  min-width: 275px;
+  max-height: 200px;
   overflow: auto;
 }
 .annotation-tooltip {
@@ -3738,6 +3811,9 @@ div.manifest-info a.mirador-btn.mirador-icon-toc {
   padding: 12px;
   padding-bottom:0;
   border-bottom: 1px solid gray;
+}
+.annotation-display:last-child {
+    border: none;
 }
 .annotation-tooltip .button-container {
   text-align: right;
@@ -3800,6 +3876,7 @@ div.manifest-info a.mirador-btn.mirador-icon-toc {
   font-size: 12;
   font-weight: bold;
   border: 1px solid #aaa;
+  display: inline-block;
 }
 
 .mce-edit-area iframe {
