@@ -5,8 +5,7 @@
 <script src="{% static "vendors/mirador/mirador.js" %}"></script>
 <link rel="stylesheet" href="{% static "vendors/mirador/css/mirador-combined.css" %}">
 <style type="text/css">
-    body { padding: 0; margin: 0; overflow: hidden; font-size: 70%; }
-    #viewer { background: #333 url(../../../static/vendors/mirador/images/debut_dark.png) left top repeat; width: 100%; height: 100%; position: fixed; }
+    #viewer { width: 100%; height: 100%; }
   </style>
   </head>
   <body>
@@ -19,10 +18,9 @@ $(function() {
         "mainMenuSettings" : {
            'show' : false
         },
-        "i18nPath" : "{% static "vendors/mirador/locales/" %}",
+        "buildPath" : "{% static "vendors/mirador/" %}",
         "layout" : "{{ layout }}",
         "saveSession" : false,
-        "logosLocation" : "{% static "vendors/mirador/images/logos/" %}",
         "data": [
         {% for i in objects %}
         { "manifestUri": "{{ i }}", "location": "Harvard University"},
